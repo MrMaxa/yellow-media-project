@@ -12,13 +12,19 @@ cp .env.example .env
 docker-compose up -d
 ```
 
-3) Run migrations
+3) Install project dependencies
+
+```
+docker exec yellow-media-php composer install
+```
+
+4) Run migrations
 
 ```
 docker exec yellow-media-php php artisan migrate
 ```
 
-4) Run test data seeder
+5) Run test data seeder
 
 After command execution, 2 users will be available for use
 

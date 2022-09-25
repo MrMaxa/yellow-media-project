@@ -30,7 +30,3 @@ $router->group([
         'as' => 'confirm-recover-password',
     ]);
 });
-
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
