@@ -17,7 +17,7 @@ class RegisterAction
 
     public function handle(array $userData): JsonResponse
     {
-        $user = $this->userRepository->register($userData);
+        $user = $this->userRepository->create($userData);
 
         return (new RegisterResource($user))
             ->response()

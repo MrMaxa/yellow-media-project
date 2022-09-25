@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Actions\User;
 
-use App\Http\Resources\User\SignInResource;
+use App\Http\Resources\BaseResource;
 use App\Services\User\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Access\AuthorizationException;
 
-class SignInAction
+class RecoverPasswordAction
 {
     public function __construct(private readonly AuthService $authService)
     {
@@ -18,14 +18,14 @@ class SignInAction
     /**
      * @throws AuthorizationException
      */
-    public function handle(array $userData): JsonResponse
+    public function handle(array $requestData): JsonResponse
     {
-        $userEmail = $userData['email'] ?? '';
-        $userPassword = $userData['password'] ?? '';
+        $email = $requestData['email'] ?? null;
+        $confirmUrl = $this->authService->recoverPassword($email);
 
-        $user = $this->authService->login($userEmail, $userPassword);
+        $responseData = ['confirm_url' => $confirmUrl];
 
-        return (new SignInResource($user))
+        return (new BaseResource($responseData))
             ->response();
     }
 }

@@ -28,4 +28,21 @@ class BaseApiRequest
     {
         return $this->validate($this->request, $this->rules());
     }
+
+    protected function getValidateData(Request $request): array
+    {
+        return $request->all();
+    }
+
+    public function validate(Request $request, array $rules, array $messages = [], array $customAttributes = []): array
+    {
+        $validator = $this->getValidationFactory()
+            ->make($this->getValidateData($request), $rules, $messages, $customAttributes);
+
+        if ($validator->fails()) {
+            $this->throwValidationException($request, $validator);
+        }
+
+        return $this->extractInputFromRules($request, $rules);
+    }
 }

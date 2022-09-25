@@ -19,6 +19,16 @@ $router->group([
         'uses' => 'User\AuthController@signIn',
         'as' => 'sign-in',
     ]);
+
+    $router->post('recover-password', [
+        'uses' => 'User\AuthController@recoverPassword',
+        'as' => 'recover-password',
+    ]);
+
+    $router->patch('recover-password/{token}', [
+        'uses' => 'User\AuthController@confirmRecoverPassword',
+        'as' => 'confirm-recover-password',
+    ]);
 });
 
 $router->get('/', function () use ($router) {

@@ -6,22 +6,20 @@ namespace App\Repositories\User;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Auth\Access\AuthorizationException;
 
 class UserRepository
 {
-    /**
-     * @throws AuthorizationException
-     */
-    public function login(string $login, string $password): User
+    public function findByEmail(string $email): ?User
     {
-        $user = $this->retrieveByCredentials($login, $password);
-
-        return $this->updateUserToken($user);
+        return User::where('email', $email)->first();
     }
 
-    public function register(array $userData): User
+    public function findByToken(string $token): ?User
+    {
+        return User::where('reset_token', $token)->first();
+    }
+
+    public function create(array $userData): User
     {
         $user = new User([
             'first_name' => $userData['first_name'],
@@ -36,25 +34,9 @@ class UserRepository
         return $user;
     }
 
-    private function updateUserToken(User $user): User
+    public function update(User $user, array $userData): User
     {
-        $user->update(['api_token' => Str::random(60)]);
-
-        return $user;
-    }
-
-    /**
-     * @throws AuthorizationException
-     */
-    private function retrieveByCredentials(string $login, string $password): User
-    {
-        $user = User::where('email', $login)->first();
-        $userPassword = $user->password ?? '';
-
-        $validCredentials = Hash::check($password, $userPassword);
-        if (is_null($user) || !$validCredentials) {
-            throw new AuthorizationException('Login failed wrong user credentials');
-        }
+        $user->update($userData);
 
         return $user;
     }
