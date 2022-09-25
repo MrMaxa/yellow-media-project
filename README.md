@@ -1,15 +1,38 @@
 ## Local deploy
 
-1) Run all containers
+1) Create .env file
+
+```
+cp .env.example .env
+```
+
+2) Run all containers
 
 ```
 docker-compose up -d
 ```
 
-2) Run migrations
+3) Run migrations
 
 ```
 docker exec yellow-media-php php artisan migrate
+```
+
+4) Run test data seeder
+
+After command execution, 2 users will be available for use
+
+- User with companies: <br>
+Login: company-user@gmail.com <br>
+Password: 12345678
+
+
+- Empty user: <br>
+Login: empty-user@gmail.com <br>
+Password: 12345678 
+
+```
+docker exec yellow-media-php php artisan db:seed --class=TestDataSeeder
 ```
 
 ## Useful commands

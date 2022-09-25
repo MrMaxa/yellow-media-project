@@ -6,9 +6,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class User extends Model
+class Company extends Model
 {
     use HasFactory;
 
@@ -18,14 +18,8 @@ class User extends Model
         'updated_at',
     ];
 
-    protected $hidden = [
-        'password',
-        'reset_token',
-        'token_created_at',
-    ];
-
-    public function companies(): HasMany
+    public function user(): BelongsTo
     {
-        return $this->hasMany(Company::class);
+        return $this->belongsTo(User::class);
     }
 }

@@ -21,13 +21,10 @@ class UserRepository
 
     public function create(array $userData): User
     {
-        $user = new User([
-            'first_name' => $userData['first_name'],
-            'last_name' => $userData['last_name'],
-            'email' => $userData['email'],
-            'phone' => $userData['phone'],
-            'password' => Hash::make($userData['password']),
-        ]);
+        $password = $userData['password'] ?? '';
+        $userData['password'] = Hash::make($password);
+
+        $user = new User($userData);
 
         $user->save();
 

@@ -58,7 +58,6 @@ class AuthController extends BaseController
     }
 
     /**
-     * @throws AuthorizationException
      * @throws ValidationException
      */
     public function confirmRecoverPassword(
