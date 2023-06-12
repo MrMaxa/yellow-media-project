@@ -48,10 +48,6 @@ PHP code style fixer
 docker exec yellow-media-php ./vendor/bin/pint
 ```
 
-## Postman information
-
-https://www.getpostman.com/collections/5fcaa301829d5936c10c
-
 ## License
 
 The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
